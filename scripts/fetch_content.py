@@ -17,6 +17,13 @@ def save_file(output_dir, filename, content):
     with open(file_path, "w") as file:
         file.write(content)
 
+def parse_markdown_content(content):
+    reusable_content = {}
+    reusable_sections = re.findall(r'\[Reusable id="(\w+)"\](.*?)\[EndReusable\]', content, re.DOTALL)
+    for section_id, section_content in reusable_sections:
+        reusable_content[section_id] = section_content.strip()
+    return reusable_content
+
 def main():
     # Define your repositories and file paths here
     repositories = [
